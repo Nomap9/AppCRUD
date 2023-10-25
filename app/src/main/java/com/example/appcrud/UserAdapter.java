@@ -3,22 +3,29 @@ package com.example.appcrud;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder>{
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> implements Filterable {
 
 
     private List<User> mListUser;
+    private List<User> mListUserOld;
 
     public UserAdapter(List<User> mListUser) {
+
         this.mListUser = mListUser;
+        this.mListUserOld = mListUser;
+
     }
 
 
@@ -57,6 +64,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         return 0;
     }
 
+
+
     public class UserViewHolder extends RecyclerView.ViewHolder {
         private CircleImageView imgUser;
         private TextView tvID;
@@ -74,5 +83,39 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         }
 
 
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String strSearch = constraint.toString();
+                if (strSearch.isEmpty()) {
+                    mListUser = mListUserOld;
+                }else {
+                    List<User> list = new ArrayList<>();
+                    for(User user: mListUserOld) {
+                        if(user.getName().toLowerCase().contains(strSearch.toLowerCase())) {
+                            list.add(user);
+                        }
+                    }
+
+                    mListUser = list;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mListUser;
+
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mListUser = (List<User>) results.values;
+                notifyDataSetChanged();
+
+            }
+        };
     }
 }

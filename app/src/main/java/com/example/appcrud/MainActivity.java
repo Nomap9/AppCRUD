@@ -11,6 +11,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.WindowManager;
 
 
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
         rcvUser = findViewById(R.id.rcv_user);
@@ -61,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         list.add(new User(R.drawable.img_3, 18,  "Xyz", "12/3/2012", 200));
         list.add(new User(R.drawable.img_4, 19,  "Lam ngu", "12/3/2012", 200));
         list.add(new User(R.drawable.img_5, 20,  "Dung ngao", "12/3/2012", 200));
-        return  list;
+        return list;
     }
 
     @Override
@@ -73,10 +77,29 @@ public class MainActivity extends AppCompatActivity {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                userAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                userAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
         return true;
     }
 
-
-
-
+    @Override
+    public void onBackPressed() {
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+            return;
+        }
+        super.onBackPressed();
+    }
 }
