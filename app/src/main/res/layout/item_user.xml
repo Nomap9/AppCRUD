@@ -19,6 +19,15 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"/>
+
+        <TextView
             android:id="@+id/tv_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,10 +37,16 @@
             android:textColor="@android:color/black"/>
 
         <TextView
-            android:id="@+id/tv_address"
+            android:id="@+id/tv_hireDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_name" />
+            android:text="hireDate" />
+
+        <TextView
+            android:id="@+id/tv_salary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="salary" />
     </LinearLayout>
 
 </RelativeLayout>

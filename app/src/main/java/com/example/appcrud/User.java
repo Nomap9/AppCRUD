@@ -2,22 +2,36 @@ package com.example.appcrud;
 
 public class User {
 
-    private int image;
+    private int img;
+    private int id;
+
     private String name;
-    private  String address;
+    private  String hireDate;
+    private  double salary;
 
-    public User(int image, String name, String address) {
-        this.image = image;
+
+    public User(int img, int id, String name, String hireDate, double salary) {
+        this.img = img;
+        this.id = id;
         this.name = name;
-        this.address = address;
+        this.hireDate = hireDate;
+        this.salary = salary;
     }
 
-    public int getImage() {
-        return image;
+    public int getImg() {
+        return img;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setImg(int img) {
+        this.img = img;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -28,11 +42,19 @@ public class User {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getHireDate() {
+        return hireDate;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setHireDate(String hireDate) {
+        this.hireDate = hireDate;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
     }
 }

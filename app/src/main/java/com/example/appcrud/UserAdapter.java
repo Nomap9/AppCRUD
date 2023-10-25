@@ -12,7 +12,8 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserVieeHolder>{
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder>{
+
 
     private List<User> mListUser;
 
@@ -20,23 +21,32 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserVieeHolder
         this.mListUser = mListUser;
     }
 
+
     @NonNull
     @Override
-    public UserVieeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user, parent, false);
-        return new UserVieeHolder(view);
+        return new UserViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UserVieeHolder holder, int position) {
+    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+        if (mListUser == null || mListUser.isEmpty()) {
+            return;
+        }
+
         User user = mListUser.get(position);
         if(user == null) {
             return;
         }
 
-        holder.imgUser.setImageResource(user.getImage());
+        holder.imgUser.setImageResource(user.getImg());
+        //holder.tvID.setText(user.getId());
+        holder.tvID.setText(String.valueOf(user.getId()));
         holder.tvName.setText(user.getName());
-        holder.tvAddress.setText(user.getAddress());
+        holder.tvHireDate.setText(user.getHireDate());
+        //holder.tvSalary.setText((int) user.getSalary());
+        holder.tvSalary.setText(String.valueOf((int) user.getSalary()));
     }
 
     @Override
@@ -47,16 +57,20 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserVieeHolder
         return 0;
     }
 
-    public class UserVieeHolder extends RecyclerView.ViewHolder {
+    public class UserViewHolder extends RecyclerView.ViewHolder {
         private CircleImageView imgUser;
+        private TextView tvID;
         private TextView tvName;
-        private TextView tvAddress;
+        private TextView tvHireDate;
+        private TextView tvSalary;
 
-        public UserVieeHolder(@NonNull View itemView) {
+        public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             imgUser = itemView.findViewById(R.id.img_user);
+            tvID = itemView.findViewById(R.id.tv_id);
             tvName = itemView.findViewById(R.id.tv_name);
-            tvAddress = itemView.findViewById(R.id.tv_address);
+            tvHireDate = itemView.findViewById(R.id.tv_hireDate);
+            tvSalary = itemView.findViewById(R.id.tv_salary);
         }
 
 

@@ -2,6 +2,7 @@ package com.example.appcrud;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,26 +41,26 @@ public class MainActivity extends AppCompatActivity {
 
     private List<User> getListUsers() {
         List<User> list = new ArrayList<>();
-        list.add(new User(R.drawable.img_1, "Minh", "Viet Tri"));
-        list.add(new User(R.drawable.img_2, "Huy", "Ha noi"));
-        list.add(new User(R.drawable.img_3, "Nguyen", "HCM"));
-        list.add(new User(R.drawable.img_4, "Quan", "Viet Tri"));
-        list.add(new User(R.drawable.img_5, "Dung", "Viet Tri"));
-        list.add(new User(R.drawable.img_1, "Quang", "Viet Tri"));
-        list.add(new User(R.drawable.img_2, "Abc", "Viet Tri"));
-        list.add(new User(R.drawable.img_3, "Xyz", "Viet Tri"));
-        list.add(new User(R.drawable.img_4, "Lam ngu", "Viet Tri"));
-        list.add(new User(R.drawable.img_5, "Dung ngao", "Viet Tri"));
-        list.add(new User(R.drawable.img_1, "Minh", "Viet Tri"));
-        list.add(new User(R.drawable.img_2, "Huy", "Ha noi"));
-        list.add(new User(R.drawable.img_3, "Nguyen", "HCM"));
-        list.add(new User(R.drawable.img_4, "Quan", "Viet Tri"));
-        list.add(new User(R.drawable.img_5, "Dung", "Viet Tri"));
-        list.add(new User(R.drawable.img_1, "Quang", "Viet Tri"));
-        list.add(new User(R.drawable.img_2, "Abc", "Viet Tri"));
-        list.add(new User(R.drawable.img_3, "Xyz", "Viet Tri"));
-        list.add(new User(R.drawable.img_4, "Lam ngu", "Viet Tri"));
-        list.add(new User(R.drawable.img_5, "Dung ngao", "Viet Tri"));
+        list.add(new User(R.drawable.img_1, 1, "Minh", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_2, 2,  "Huy", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_3, 3,  "Nguyen", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_4, 4,  "Quan", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_5, 5,  "Dung", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_1, 6,  "Quang", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_2, 7,  "Abc", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_3, 8,  "Xyz", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_4, 9,  "Lam ngu", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_5, 10,  "Dung ngao", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_1, 11,  "Minh", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_2, 12,  "Huy", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_3, 13,  "Nguyen", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_4, 14,  "Quan", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_5, 15,  "Dung", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_1, 16,  "Quang", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_2, 17,  "Abc", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_3, 18,  "Xyz", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_4, 19,  "Lam ngu", "12/3/2012", 200));
+        list.add(new User(R.drawable.img_5, 20,  "Dung ngao", "12/3/2012", 200));
         return  list;
     }
 
@@ -74,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+
+
 
 
 }
