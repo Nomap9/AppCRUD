@@ -3,6 +3,7 @@ package com.example.appcrud;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
@@ -64,6 +65,19 @@ public class SearchPresenter extends RecyclerView.Adapter<SearchPresenter.UserVi
         holder.tvHireDate.setText(user.getHireDate());
         //holder.tvSalary.setText((int) user.getSalary());
         holder.tvSalary.setText(String.valueOf((int) user.getSalary()));
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v.equals(holder.delete)){
+                    removeAt(position);
+                }
+            }
+        });
+    }
+    public void removeAt(int position) {
+        mListUser.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mListUser.size());
     }
 
     @Override
@@ -82,6 +96,7 @@ public class SearchPresenter extends RecyclerView.Adapter<SearchPresenter.UserVi
         private TextView tvName;
         private TextView tvHireDate;
         private TextView tvSalary;
+        private Button delete;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,6 +105,7 @@ public class SearchPresenter extends RecyclerView.Adapter<SearchPresenter.UserVi
             tvName = itemView.findViewById(R.id.tv_name);
             tvHireDate = itemView.findViewById(R.id.tv_hireDate);
             tvSalary = itemView.findViewById(R.id.tv_salary);
+            delete = itemView.findViewById(R.id.delete);
         }
 
 
