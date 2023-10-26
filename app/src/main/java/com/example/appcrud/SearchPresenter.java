@@ -15,17 +15,27 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> implements Filterable {
+public class SearchPresenter extends RecyclerView.Adapter<SearchPresenter.UserViewHolder> implements Filterable {
 
 
     private List<User> mListUser;
     private List<User> mListUserOld;
+    private SearchInterface searchInterface; // Tham chiếu đến giao diện View
 
-    public UserAdapter(List<User> mListUser) {
-
+    public SearchPresenter(List<User> mListUser, SearchInterface searchInterface) {
         this.mListUser = mListUser;
         this.mListUserOld = mListUser;
+        this.searchInterface = searchInterface;
+    }
 
+    public void setUsers(List<User> userList) {
+        mListUser = userList;
+        notifyDataSetChanged();
+    }
+
+    public void setFilteredUsers(List<User> filteredList) {
+        mListUser = filteredList;
+        notifyDataSetChanged();
     }
 
 
@@ -93,19 +103,21 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 String strSearch = constraint.toString();
                 if (strSearch.isEmpty()) {
                     mListUser = mListUserOld;
-                }else {
+                } else {
                     List<User> list = new ArrayList<>();
-                    for(User user: mListUserOld) {
-                        if(user.getName().toLowerCase().contains(strSearch.toLowerCase())) {
+                    for (User user : mListUserOld) {
+                        if (user.getName().toLowerCase().contains(strSearch.toLowerCase())) {
                             list.add(user);
                         }
                     }
-
                     mListUser = list;
                 }
 
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = mListUser;
+
+                // Giao tiếp dữ liệu đã lọc với View bằng cách sử dụng giao diện
+                searchInterface.showFilteredUsers(mListUser);
 
                 return filterResults;
             }
@@ -113,8 +125,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 mListUser = (List<User>) results.values;
-                notifyDataSetChanged();
 
+                // Giao tiếp dữ liệu cập nhật với View bằng cách sử dụng giao diện
+                searchInterface.showFilteredUsers(mListUser);
+                notifyDataSetChanged();
             }
         };
     }

@@ -2,7 +2,6 @@ package com.example.appcrud;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,10 +16,10 @@ import android.view.WindowManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchInterface {
 
     private RecyclerView rcvUser;
-    private UserAdapter userAdapter;
+    private SearchPresenter searchPresenter;
     private SearchView searchView;
 
     @Override
@@ -31,13 +30,12 @@ public class MainActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
         rcvUser = findViewById(R.id.rcv_user);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcvUser.setLayoutManager(linearLayoutManager);
 
-        userAdapter = new UserAdapter(getListUsers());
-        rcvUser.setAdapter(userAdapter);
+        searchPresenter = new SearchPresenter(getListUsers(), (SearchInterface) this); // Truyền tham chiếu của giao diện UserInterface
+        rcvUser.setAdapter(searchPresenter);
 
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         rcvUser.addItemDecoration(itemDecoration);
@@ -80,13 +78,13 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                userAdapter.getFilter().filter(query);
+                searchPresenter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                userAdapter.getFilter().filter(newText);
+                searchPresenter.getFilter().filter(newText);
                 return false;
             }
         });
@@ -101,5 +99,17 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         super.onBackPressed();
+    }
+
+
+    @Override
+    public void showUsers(List<User> userList) {
+        searchPresenter.setUsers(userList);
+    }
+
+    @Override
+    public void showFilteredUsers(List<User> filteredList) {
+        searchPresenter.setFilteredUsers(filteredList);
+        searchPresenter.notifyDataSetChanged();
     }
 }
