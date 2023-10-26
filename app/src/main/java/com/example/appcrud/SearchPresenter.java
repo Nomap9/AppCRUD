@@ -1,5 +1,6 @@
 package com.example.appcrud;
 
+import android.app.Dialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +74,62 @@ public class SearchPresenter extends RecyclerView.Adapter<SearchPresenter.UserVi
                 }
             }
         });
+
+        holder.update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(v, position);
+            }
+        });
     }
+
+    public void showDialog(View itemView, int position) {
+        Dialog dialog = new Dialog(itemView.getContext());
+        dialog.setContentView(R.layout.dialog_update_user);
+
+        TextView newNameEditText = dialog.findViewById(R.id.new_name);
+        TextView newHireDateEditText = dialog.findViewById(R.id.new_hire_date);
+        TextView newSalaryEditText = dialog.findViewById(R.id.new_salary);
+
+        Button updateButton = dialog.findViewById(R.id.btn_update);
+        Button cancelButton = dialog.findViewById(R.id.btn_cancel);
+
+        // Nút "Update" được bấm
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String newName = newNameEditText.getText().toString();
+                String newHireDate = newHireDateEditText.getText().toString();
+                double newSalary = Double.parseDouble(newSalaryEditText.getText().toString());
+
+                // Cập nhật thông tin người dùng và cập nhật RecyclerView
+                mListUser.get(position).setName(newName);
+                mListUser.get(position).setHireDate(newHireDate);
+                mListUser.get(position).setSalary(newSalary);
+
+                notifyDataSetChanged();
+
+                dialog.dismiss();
+            }
+        });
+
+        // Nút "Cancel" được bấm
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+//    public void showDialog(View itemView){
+//        Dialog dialog = new Dialog(itemView.getContext());
+//        dialog.setContentView(R.layout.dialog_update_user);
+//        dialog.show();
+//    }
+
     public void removeAt(int position) {
         mListUser.remove(position);
         notifyItemRemoved(position);
@@ -98,6 +154,8 @@ public class SearchPresenter extends RecyclerView.Adapter<SearchPresenter.UserVi
         private TextView tvSalary;
         private Button delete;
 
+        private Button update;
+
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             imgUser = itemView.findViewById(R.id.img_user);
@@ -106,6 +164,7 @@ public class SearchPresenter extends RecyclerView.Adapter<SearchPresenter.UserVi
             tvHireDate = itemView.findViewById(R.id.tv_hireDate);
             tvSalary = itemView.findViewById(R.id.tv_salary);
             delete = itemView.findViewById(R.id.delete);
+            update = itemView.findViewById(R.id.update);
         }
 
 
