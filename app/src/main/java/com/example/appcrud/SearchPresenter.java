@@ -28,6 +28,7 @@ public class SearchPresenter extends RecyclerView.Adapter<SearchPresenter.UserVi
         this.searchInterface = searchInterface;
     }
 
+    //đặt dữ liệu người dùng để hiển thị trong RecyclerView
     public void setUsers(List<User> userList) {
         mListUser = userList;
         notifyDataSetChanged();
@@ -41,6 +42,7 @@ public class SearchPresenter extends RecyclerView.Adapter<SearchPresenter.UserVi
 
     @NonNull
     @Override
+    // inflate bố cục cho một mục người dùng
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user, parent, false);
         return new UserViewHolder(view);
